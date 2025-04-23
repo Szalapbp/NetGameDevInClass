@@ -206,7 +206,7 @@ namespace IT4080C
                     }
                     //adjust y offset
                     LocalTransform tempTransform = localTrans[UnityEngine.Random.Range(0, localTrans.Count - 1)];
-                    tempTransform.Position.y = 0f;
+                    tempTransform.Position.y += 0f;
 
 
                     playerPosition.ValueRW.Position = tempTransform.Position;
