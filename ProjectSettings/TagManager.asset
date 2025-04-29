@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UIManager
   - UIScoreManager
+  - AIZombie
   layers:
   - Default
   - TransparentFX
