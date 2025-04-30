@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 4312411465562157310}
   - component: {fileID: 5981221438646311479}
   - component: {fileID: 1551757342431193766}
+  - component: {fileID: 2645571627853026010}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: AIZombie
@@ -366,6 +367,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4423b84ad764c934ea728320fe94a43e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2645571627853026010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023955186849504608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81597ca0b8fa1824ca20ead1697116aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3489645437247301428, guid: fccbfabdc5fef3849941a2b590d18463, type: 3}
+  moveSpeed: 3
 --- !u!1 &3194146544583678446
 GameObject:
   m_ObjectHideFlags: 0
