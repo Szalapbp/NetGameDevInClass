@@ -11,9 +11,8 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
 {
     /// <summary>
     /// This allows sending RPCs between a standalone build and the editor for testing purposes in the event when you
-    /// finish this example.
-    /// you want to connect a server-client standalone build to a client configured editor instance.
-    /// INPUT: <see cref="RpcCollection"/> collectoin of all the rpcs.
+    /// finish this example. you want to connect a server-client standalone build to a client configured editor instance.
+    /// INPUT: <see cref="RpcCollection"/> collection of all the rpcs.
     /// OUTPUT: <see cref="RpcCollection"/> collection of all the rpcs with enabled assembly list.
     /// </summary>
     // [BurstCompile]
@@ -33,12 +32,12 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
             state.Enabled = false;
         }
     }
-    
+
     /// <summary>
     /// RPC request from client to server for game to go "in game" and send snapshots / inputs
     /// </summary>
     public struct GoInGameRequest : IRpcCommand { }
-    
+
     /// <summary>
     /// When a client has a connection with network id, go in game and tell the server to also go in game.
     /// INPUT: <see cref="NetworkId"/> network id of the client, but only if there is no NetworkStreamInGame.
@@ -73,21 +72,21 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
                 commandBuffer.AddComponent<NetworkStreamInGame>(entity);
                 var req = commandBuffer.CreateEntity();
                 commandBuffer.AddComponent<GoInGameRequest>(req);
-                commandBuffer.AddComponent(req, new SendRpcCommandRequest {TargetConnection = entity});
+                commandBuffer.AddComponent(req, new SendRpcCommandRequest { TargetConnection = entity });
                 Debug.Log($"Adding RPC request to go in game from client side {entity.Index} - {id.ValueRO.Value}");
             }
 
             commandBuffer.Playback(state.EntityManager);
         }
     }
-    
+
     /// <summary>
     /// When the server receives a go in game request, go in game and delete request.
     /// INPUT: <see cref="GoInGameRequest"/> request.
     /// OUTPUT: created entity with a <see cref="GhostOwner"/> component and a <see cref="LinkedEntityGroup"/> component.
     /// </summary>
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
-    public partial struct GoInGameServerSystem : ISystem 
+    public partial struct GoInGameServerSystem : ISystem
     {
         private ComponentLookup<NetworkId> networkIdFromEntity;
 
@@ -127,7 +126,7 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
             networkIdFromEntity.Update(ref state);
 
             foreach (var (reqSrc, reqEntity) in
-         SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequest>().WithEntityAccess())
+                     SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequest>().WithEntityAccess())
             {
                 commandBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
                 var networkId = networkIdFromEntity[reqSrc.ValueRO.SourceConnection];
@@ -144,7 +143,6 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
 
                 commandBuffer.DestroyEntity(reqEntity);
             }
-
 
             commandBuffer.Playback(state.EntityManager);
         }
