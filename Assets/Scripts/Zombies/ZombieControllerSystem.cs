@@ -64,7 +64,18 @@ public partial struct ZombieControllerSystem : ISystem
             {
                 playerHealth.ValueRW.CurrentHealth -= 10f; // Deal damage
                 UnityEngine.Debug.Log($"Player at {playerPosition} took 10 damage!");
+
+                // Check if player's health has reached 0
+                if (playerHealth.ValueRW.CurrentHealth <= 0)
+                {
+                    // Increment death counter
+                    playerHealth.ValueRW.deaths += 1;
+                    UnityEngine.Debug.Log($"Player at {playerPosition} died! Total deaths: {playerHealth.ValueRW.deaths}");
+
+                    // Optional: Handle additional logic for player death (e.g., triggering respawn)
+                }
             }
         }
     }
+
 }

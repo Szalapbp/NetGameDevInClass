@@ -126,8 +126,8 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
             var commandBuffer = new EntityCommandBuffer(Allocator.Temp);
             networkIdFromEntity.Update(ref state);
 
-            foreach (var (reqSrc, reqEntity) in 
-                     SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequest>().WithEntityAccess())
+            foreach (var (reqSrc, reqEntity) in
+         SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequest>().WithEntityAccess())
             {
                 commandBuffer.AddComponent<NetworkStreamInGame>(reqSrc.ValueRO.SourceConnection);
                 var networkId = networkIdFromEntity[reqSrc.ValueRO.SourceConnection];
@@ -136,14 +136,15 @@ namespace Unity.Multiplayer.Center.NetcodeForEntitiesExample
 
                 var player = commandBuffer.Instantiate(prefab);
                 commandBuffer.SetComponent(player, LocalTransform.FromPosition(spawnPT));
-                commandBuffer.SetComponent(player, new GhostOwner {NetworkId = networkId.Value});
+                commandBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value });
                 commandBuffer.SetComponent(player, new HealthComponent { CurrentHealth = 100f, MaxHealth = 100f, ownerNetworkID = networkId.Value });
 
                 // Add the player to the linked entity group so it is destroyed automatically on disconnect
-                commandBuffer.AppendToBuffer(reqSrc.ValueRO.SourceConnection, new LinkedEntityGroup {Value = player});
+                commandBuffer.AppendToBuffer(reqSrc.ValueRO.SourceConnection, new LinkedEntityGroup { Value = player });
 
                 commandBuffer.DestroyEntity(reqEntity);
             }
+
 
             commandBuffer.Playback(state.EntityManager);
         }

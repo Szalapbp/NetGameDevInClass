@@ -82,6 +82,18 @@ public partial struct CollisionSimulationJob : ICollisionEventsJob
                     }
                 }
             }
+            else if (health.CurrentHealth <= 0)
+            {
+                // Increment the death counter
+                health.deaths += 1;
+
+                // Log the death
+                Debug.Log($"Player {health.ownerNetworkID} died. Total deaths: {health.deaths}");
+
+                // Update the HealthComponent
+                PlayerHealthLookup[collisionEvent.EntityB] = health;
+            }
+
             else if (HPBoxLookup.TryGetComponent(collisionEvent.EntityA, out HPBox hpBox))
             {
                 float healthPickUpValue = 25f;
@@ -132,6 +144,16 @@ public partial struct CollisionSimulationJob : ICollisionEventsJob
                 }
 
             }
+            if (health.CurrentHealth <= 0)
+            {
+                // Increment death counter
+                health.deaths += 1;
+                Debug.Log($"Player {health.ownerNetworkID} died. Total deaths: {health.deaths}");
+
+                // Update HealthComponent
+                PlayerHealthLookup[collisionEvent.EntityB] = health;
+            }
+
 
         }
 
