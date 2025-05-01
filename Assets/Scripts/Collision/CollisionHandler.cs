@@ -50,6 +50,9 @@ public partial struct CollisionSimulationJob : ICollisionEventsJob
     public ComponentLookup<HPBox> HPBoxLookup;
     public ComponentLookup<PowerBox> PowerBoxLookup;
     public ComponentLookup<PoweredUpComponent> PoweredUpComponentLookup;
+
+
+   
     public void Execute(CollisionEvent collisionEvent)
     {
         if (PlayerHealthLookup.TryGetComponent(collisionEvent.EntityB, out HealthComponent health))
